@@ -10,7 +10,7 @@ RUN cd /var/projects; mvn clean install
 
 EXPOSE 8080
 
-CMD /usr/bin/java -jar /var/projects/target/myproject-0.0.1-SNAPSHOT.jar --data.file.path=/var/github/a.data
+CMD /usr/bin/java -jar /var/projects/target/myproject-0.0.1-SNAPSHOT.jar --debug --data.file.path=/var/github/a.data
 
 #docker build -t stliu/github:latest .
 
