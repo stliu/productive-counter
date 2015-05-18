@@ -1,12 +1,16 @@
 FROM jamesdbloom/docker-java8-maven
 MAINTAINER Strong Liu <stliu@apache.org>
-ADD src
-ADD pom.xml
-RUN mvn clean install
+
+RUN mkdir /var/projects
+ADD src  /var/projects/src
+ADD pom.xml /var/projects/pom.xml
+
+RUN cd /var/projects; mvn clean install
 
 
 EXPOSE 8080
 
+WORKDIR /var/projects
 ENTRYPOINT ["java -jar target/myproject-0.0.1-SNAPSHOT.jar --data.file.path=/var/github.data"]
 
 
