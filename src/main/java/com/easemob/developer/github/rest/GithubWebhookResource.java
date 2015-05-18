@@ -31,6 +31,10 @@ public class GithubWebhookResource {
 
     private static final Logger logger = LoggerFactory.getLogger(GithubWebhookResource.class);
 
+    public GithubWebhookResource() {
+        logger.info("GithubWebhookResource initialized");
+    }
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -39,6 +43,7 @@ public class GithubWebhookResource {
 
     @POST
     public Response webhook(ContainerNode json, @Context HttpHeaders headers) throws JsonProcessingException {
+        logger.debug("processing github webhook");
         try {
             processor.process(headers.getRequestHeaders(), json);
         } catch (Exception e) {

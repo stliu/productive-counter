@@ -14,4 +14,4 @@ CMD /usr/bin/java -jar /var/projects/target/myproject-0.0.1-SNAPSHOT.jar --debug
 
 #docker build -t stliu/github:latest .
 
-#docker run -p 8080   -v /home/core/github/:/var/github/ stliu/github
+#docker run -p 8080:8080   -v /home/core/github/:/var/github/ stliu/github
