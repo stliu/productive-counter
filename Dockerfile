@@ -1,6 +1,7 @@
 FROM jamesdbloom/docker-java8-maven
 MAINTAINER Strong Liu <stliu@apache.org>
-
+ADD src
+ADD pom.xml
 RUN mvn clean install
 
 
