@@ -1,5 +1,6 @@
 package com.easemob.developer.github.event;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import org.eclipse.egit.github.core.Tree;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @date 5/19/15
  */
 @Data
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
 public class Commit implements Serializable {
 
     /** serialVersionUID */

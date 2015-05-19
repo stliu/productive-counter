@@ -1,14 +1,17 @@
 package com.easemob.developer.github.event;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author stliu <stliu@apache.org>
  * @date 5/19/15
  */
 @Data
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
 public class CommitUser implements Serializable {
 
     /** serialVersionUID */
@@ -19,5 +22,6 @@ public class CommitUser implements Serializable {
 
     private String name;
     private String username;
+    private Date date;
 
 }
