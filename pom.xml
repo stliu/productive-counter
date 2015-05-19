@@ -17,6 +17,8 @@
     <properties>
         <start-class>com.easemob.developer.github.Application</start-class>
         <jersey.version>2.17</jersey.version>
+        <java.version>1.8</java.version>
+
     </properties>
     <!-- Add typical dependencies for a web application -->
     <dependencies>
@@ -67,6 +69,22 @@
             <groupId>org.glassfish.jersey.ext.rx</groupId>
             <artifactId>jersey-rx-client</artifactId>
             <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.ext.rx</groupId>
+            <artifactId>jersey-rx-client-rxjava</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
