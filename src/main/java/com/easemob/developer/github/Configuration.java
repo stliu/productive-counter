@@ -1,22 +1,18 @@
 package com.easemob.developer.github;
 
-import com.easemob.developer.github.rest.GithubWebhookResource;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.rx.Rx;
 import org.glassfish.jersey.client.rx.RxClient;
 import org.glassfish.jersey.client.rx.rxjava.RxObservableInvoker;
 import org.glassfish.jersey.filter.LoggingFilter;
-import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.core.task.support.ExecutorServiceAdapter;
+import org.springframework.http.client.Netty4ClientHttpRequestFactory;
 import org.springframework.scheduling.config.TaskExecutorFactoryBean;
 
 import javax.ws.rs.core.Configurable;
@@ -79,22 +75,27 @@ public class Configuration {
         configJersey(client, objectMapper);
         return client;
     }
-
     @Bean
-    public ResourceConfig resourceConfig(ObjectMapper objectMapper, GithubWebhookResource resource) {
-        ResourceConfig resourceConfig = new ResourceConfig();
-        configJersey(resourceConfig, objectMapper);
-        resourceConfig.register(resource);
-        resourceConfig.packages(Configuration.class.getPackage().getName());
-        return resourceConfig;
+    public Netty4ClientHttpRequestFactory netty4ClientHttpRequestFactory(){
+        Netty4ClientHttpRequestFactory requestFactory = new Netty4ClientHttpRequestFactory();
+        return requestFactory;
     }
 
+//    @Bean
+//    public ResourceConfig resourceConfig(ObjectMapper objectMapper, GithubWebhookResource resource) {
+//        ResourceConfig resourceConfig = new ResourceConfig();
+//        configJersey(resourceConfig, objectMapper);
+//        resourceConfig.register(resource);
+//        resourceConfig.packages(Configuration.class.getPackage().getName());
+//        return resourceConfig;
+//    }
+
     private <T extends Configurable> void configJersey(T configurable, ObjectMapper objectMapper) {
-        configurable.register(JacksonFeature.class);
-        configurable.register(new JacksonJsonProvider(objectMapper));
-        configurable.register(new JacksonJaxbJsonProvider(objectMapper, JacksonJaxbJsonProvider.DEFAULT_ANNOTATIONS));
-//        if (log.isDebugEnabled()) {
-            configurable.register(LoggingFilter.class);
-//        }
+//        configurable.register(JacksonFeature.class);
+//        configurable.register(new JacksonJsonProvider(objectMapper));
+//        configurable.register(new JacksonJaxbJsonProvider(objectMapper, JacksonJaxbJsonProvider.DEFAULT_ANNOTATIONS));
+////        if (log.isDebugEnabled()) {
+//            configurable.register(LoggingFilter.class);
+////        }
     }
 }

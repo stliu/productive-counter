@@ -5,7 +5,6 @@ import com.easemob.developer.github.event.CommitInfo;
 import com.easemob.developer.github.event.PushPayload;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Strings;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.rx.RxClient;
 import org.glassfish.jersey.client.rx.RxInvocationBuilder;
@@ -13,10 +12,11 @@ import org.glassfish.jersey.client.rx.RxWebTarget;
 import org.glassfish.jersey.client.rx.rxjava.RxObservableInvoker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import rx.functions.Func1;
 
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.util.concurrent.ExecutorService;
 
@@ -40,7 +40,7 @@ public class PlainFileDataProcessor implements EventDataProcessor {
     private String applicationName;
 
     @Override
-    public void process(MultivaluedMap<String, String> headers, PushPayload body) throws Exception {
+    public void process(HttpHeaders headers, PushPayload body) throws Exception {
         if (headers == null || body == null) {
             log.warn("web hook is invalid, headers is  {} body is {}", headers, body);
             return;
@@ -79,11 +79,11 @@ public class PlainFileDataProcessor implements EventDataProcessor {
 
     public static Func1<Response, Boolean> ASSERT_SUCCESS = response -> response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL;
 
-    public RxObservableInvoker config(RxWebTarget<RxObservableInvoker> target) {
+    private RxObservableInvoker config(RxWebTarget<RxObservableInvoker> target) {
         RxInvocationBuilder<RxObservableInvoker> builder = target.request()
                 .accept(Configuration.GITHUB_V3_MEDIA_TYPE)
                 .header("User-Agent", applicationName);
-        if (!Strings.isNullOrEmpty(githubAccessToken)) {
+        if (!StringUtils.isEmpty(githubAccessToken)) {
             builder.header("Authorization", "token " + githubAccessToken);
         }
         return builder.rx(executorService);

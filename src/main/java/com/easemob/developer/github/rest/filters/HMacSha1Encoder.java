@@ -1,7 +1,7 @@
 package com.easemob.developer.github.rest.filters;
 
-import org.apache.cassandra.utils.Hex;
 
+import org.apache.commons.codec.binary.Hex;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
@@ -25,6 +25,6 @@ public class HMacSha1Encoder {
         // Compute the hmac on input data bytes
         byte[] rawHmac = mac.doFinal(value.getBytes());
         mac.reset();
-        return Hex.bytesToHex(rawHmac);
+        return Hex.encodeHexString(rawHmac);
     }
 }
