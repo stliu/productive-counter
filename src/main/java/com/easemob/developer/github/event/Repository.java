@@ -1,6 +1,5 @@
 package com.easemob.developer.github.event;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -22,7 +21,6 @@ public class Repository implements Serializable {
     private int forks;
 
 
-    @SerializedName("private")
     private boolean isPrivate;
 
     private Date createdAt;

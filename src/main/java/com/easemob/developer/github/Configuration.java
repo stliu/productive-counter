@@ -17,14 +17,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.core.task.support.ExecutorServiceAdapter;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.TaskExecutorFactoryBean;
-import org.springframework.scheduling.support.TaskUtils;
-import org.springframework.util.ErrorHandler;
 
 import javax.ws.rs.core.Configurable;
-import java.util.Optional;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**

@@ -2,7 +2,6 @@ package com.easemob.developer.github.event;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-import org.eclipse.egit.github.core.Tree;
 
 import java.io.Serializable;
 import java.util.Date;

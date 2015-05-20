@@ -1,11 +1,8 @@
 package com.easemob.developer.github.event;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import lombok.Data;
-import org.eclipse.egit.github.core.UserPlan;
-import org.eclipse.egit.github.core.util.DateUtils;
+
+import java.io.Serializable;
 
 /**
  * GitHub user model class.

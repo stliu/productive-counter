@@ -1,24 +1,17 @@
 package com.easemob.developer.github.rest.filters;
 
-import com.google.common.base.Predicates;
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
-import org.apache.cassandra.utils.Hex;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.ext.Provider;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 

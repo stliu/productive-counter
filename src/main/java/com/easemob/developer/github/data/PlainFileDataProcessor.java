@@ -1,32 +1,23 @@
 package com.easemob.developer.github.data;
 
 import com.easemob.developer.github.Configuration;
-import com.easemob.developer.github.event.Commit;
 import com.easemob.developer.github.event.CommitInfo;
 import com.easemob.developer.github.event.PushPayload;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ContainerNode;
 import com.google.common.base.Strings;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.rx.RxClient;
 import org.glassfish.jersey.client.rx.RxInvocationBuilder;
 import org.glassfish.jersey.client.rx.RxWebTarget;
 import org.glassfish.jersey.client.rx.rxjava.RxObservableInvoker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import rx.Subscriber;
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import java.nio.charset.Charset;
-import java.util.Date;
 import java.util.concurrent.ExecutorService;
 
 /**
