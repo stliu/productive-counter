@@ -1,7 +1,10 @@
 package com.easemob.developer.github.rest;
 
 import com.easemob.developer.github.data.EventDataProcessor;
-import com.easemob.developer.github.event.PushPayload;
+import com.easemob.developer.github.entities.GithubRepository;
+import com.easemob.developer.github.entities.PushPayload;
+import com.easemob.developer.github.entities.RepositoryRepository;
+import com.easemob.developer.github.request.FetchCommitInfoCommand;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -24,7 +29,16 @@ public class GithubWebhookController {
 
     @Autowired
     private EventDataProcessor processor;
+    @Autowired
+    private FetchCommitInfoCommand commitInfoCommand;
+    @Autowired
+    private RepositoryRepository githubRepository;
 
+    /**
+     * Github Push Event {@link https://developer.github.com/v3/activity/events/types/#pushevent} 的回调接口
+     * <p>
+     * 会根据回调中的commit id和url去获取该commit的信息并保存
+     */
     @RequestMapping(value = "/github",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -38,4 +52,20 @@ public class GithubWebhookController {
         }
         return ResponseEntity.accepted().build();
     }
+
+    /**
+     * Github API 来获取一个commit的信息 {@link https://developer.github.com/v3/repos/commits/#get-a-single-commit}
+     * GET /repos/:owner/:repo/commits/:sha
+     */
+    @RequestMapping(value = "/repos_data",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+//            consumes = MediaType.APPLICATION_JSON_VALUE,
+            method = RequestMethod.GET)
+    @ResponseBody
+    public List<GithubRepository> getCommitInfo() throws JsonProcessingException {
+        log.debug("processing github webhook");
+        return githubRepository.findAll();
+    }
+
+
 }
