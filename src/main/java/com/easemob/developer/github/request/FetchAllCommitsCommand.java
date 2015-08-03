@@ -25,7 +25,6 @@ import java.time.Instant;
 @Component
 @Slf4j
 public class FetchAllCommitsCommand {
-    private static final UriBuilder FETCH_COMMIT_TEMPLATE = UriBuilder.fromUri(Github.GITHUB_ROOT + "/repos/{owner}/{repo}/commits");
 
 
     private final Github github;
@@ -36,6 +35,7 @@ public class FetchAllCommitsCommand {
     }
 
     public Observable<SimpleCommit> fetch(String owner, String repo, Instant since, Instant until, Integer perPage) {
+         UriBuilder FETCH_COMMIT_TEMPLATE = UriBuilder.fromUri(Github.GITHUB_ROOT + "/repos/{owner}/{repo}/commits");
 
         if (StringUtils.isEmpty(owner) || StringUtils.isEmpty(repo)) {
             throw new IllegalArgumentException("owner or repo must not empty");
@@ -51,6 +51,7 @@ public class FetchAllCommitsCommand {
             builder.queryParam("per_page", perPage);
         }
         URI uri = builder.build();
+        System.out.println("fetch commits: "+uri);
         return  github.fetch(uri, SimpleCommit.class);
     }
 

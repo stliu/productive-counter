@@ -97,6 +97,7 @@ public class ASDF {
         }
     };
 
+    static Instant  since = Instant.parse("2015-06-01T00:00:00.00Z");
 
     /**
      * 把一个github repo的所有的commits取出来
@@ -104,14 +105,14 @@ public class ASDF {
     public final Func1<GithubRepository, Observable<Commit>> FETCH_ALL_COMMITS = new Func1<GithubRepository, Observable<Commit>>() {
         @Override
         public Observable<Commit> call(GithubRepository repository) {
-            System.out.println("========= repo ======");
+            System.out.println("========= repo ====== " +repository.getName());
             try {
                 repositoryRepository.saveAndFlush(repository);
                 System.out.println(objectMapper.writeValueAsString(repository));
             } catch (Throwable e) {
                 e.printStackTrace();
             }
-            Instant since = repository.getCreatedAt().toInstant();
+//            Instant since = repository.getCreatedAt().toInstant();
             Observable<SimpleCommit> observable = allCommitsCommand.fetch(OWNER, repository.getName(), since, null, null);
             return observable
                     .map(SimpleCommit::getUrl)
