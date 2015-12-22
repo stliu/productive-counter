@@ -10,7 +10,7 @@ RUN cd /var/projects; mvn clean install
 
 EXPOSE 8080
 
-CMD /usr/bin/java -jar /var/projects/target/myproject-0.0.1-SNAPSHOT.jar --debug --data.file.path=/var/github/a.data
+CMD /usr/bin/java -jar /var/projects/target/myproject-0.0.1-SNAPSHOT.jar --spring.datasource.url=jdbc:mysql://127.0.0.1/github --spring.datasource.username=root --spring.datasource.password=github
 
 #docker build -t stliu/github:latest .
 

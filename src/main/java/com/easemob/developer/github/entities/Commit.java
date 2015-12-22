@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author stliu <stliu@apache.org>
@@ -45,6 +46,8 @@ public class Commit implements Serializable {
     private Date authorDate;
     @Access(AccessType.PROPERTY)
     private Date commitDate;
+//    @ElementCollection
+//    private List<CommitFile> files;
 
     public String getAuthorName() {
         if (authorName == null && commit != null && commit.getAuthor() != null) {

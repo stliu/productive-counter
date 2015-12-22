@@ -34,13 +34,31 @@ public class FetchAllCommitsCommand {
         this.github = github;
     }
 
-    public Observable<SimpleCommit> fetch(String owner, String repo, Instant since, Instant until, Integer perPage) {
-         UriBuilder FETCH_COMMIT_TEMPLATE = UriBuilder.fromUri(Github.GITHUB_ROOT + "/repos/{owner}/{repo}/commits");
+    public Observable<SimpleCommit> fetch(String owner, String repo, String branch, Instant since, Instant until, Integer perPage) {
+         UriBuilder FETCH_COMMIT_TEMPLATE = UriBuilder.fromUri(Github.GITHUB_ROOT + "/repos/{owner}/{repo}/commits/{branch}");
 
         if (StringUtils.isEmpty(owner) || StringUtils.isEmpty(repo)) {
             throw new IllegalArgumentException("owner or repo must not empty");
         }
         UriBuilder builder = FETCH_COMMIT_TEMPLATE.resolveTemplate("owner", owner).resolveTemplate("repo", repo);
+        if (since != null) {
+            builder.queryParam("since", since);
+        }
+        if (until != null) {
+            builder.queryParam("until", until);
+        }
+        if (perPage != null && perPage > 0) {
+            builder.queryParam("per_page", perPage);
+        }
+        URI uri = builder.build();
+        System.out.println("fetch commits: "+uri);
+        return  github.fetch(uri, SimpleCommit.class);
+    }
+
+    public Observable<SimpleCommit> fetchWithBranch(String url, Instant since, Instant until, Integer perPage) {
+        UriBuilder FETCH_COMMIT_TEMPLATE = UriBuilder.fromUri(url);
+
+        UriBuilder builder = FETCH_COMMIT_TEMPLATE;
         if (since != null) {
             builder.queryParam("since", since);
         }
