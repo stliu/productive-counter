@@ -1,9 +1,7 @@
 package com.easemob.developer.github.request;
 
-import com.easemob.developer.github.GithubConfiguration;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ContainerNode;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.rx.RxClient;
@@ -15,13 +13,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Func1;
 
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 
@@ -35,7 +34,8 @@ public class Github {
     public static final String GITHUB_ROOT = "https://api.github.com";
     public static final String GITHUB_V3_MEDIA_TYPE = "application/vnd.github.v3+json";
     public static final UriBuilder ROOT = UriBuilder.fromUri(GITHUB_ROOT);
-
+    public static final String RATE_LIMIT_REMAINING_HEADER = "X-RateLimit-Remaining";
+    public static final String RATE_LIMIT_RESET_HEADER = "X-RateLimit-Reset";
     @Autowired
     protected ObjectMapper objectMapper;
     @Autowired
@@ -78,6 +78,25 @@ public class Github {
                     Observable<T> result = convert(clazz, r);
                     return result.mergeWith(fetch(next, clazz));
                 });
+    }
+
+    /**
+     * 从response的header中获取还有多少个request可以发, 参见 {@link https://developer.github.com/v3/#rate-limiting}
+     */
+    private static int getRemainingRequest(Response response){
+        if(response == null){
+            return 0;
+        }
+        String value =  response.getHeaderString(RATE_LIMIT_REMAINING_HEADER);
+        if(StringUtils.isEmpty(value)){
+            return 0;
+        }
+        return Integer.valueOf(value);
+    }
+
+    public static void main(String[] args) {
+        Instant instant = Instant.ofEpochSecond(1448989180).plus(8, ChronoUnit.HOURS);
+        System.out.println(instant);
     }
 
     /**

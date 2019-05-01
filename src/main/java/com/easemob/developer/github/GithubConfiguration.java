@@ -16,9 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.core.task.support.ExecutorServiceAdapter;
-import org.springframework.http.client.Netty4ClientHttpRequestFactory;
 import org.springframework.scheduling.config.TaskExecutorFactoryBean;
-import org.springframework.web.client.AsyncRestTemplate;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -82,15 +80,15 @@ public class GithubConfiguration {
         return client;
     }
 
-    @Bean
-    public AsyncRestTemplate asyncRestTemplate() {
-        AsyncRestTemplate template = new AsyncRestTemplate(netty4ClientHttpRequestFactory());
-        return template;
-    }
-
-    public Netty4ClientHttpRequestFactory netty4ClientHttpRequestFactory() {
-        Netty4ClientHttpRequestFactory requestFactory = new Netty4ClientHttpRequestFactory();
-        return requestFactory;
-    }
+//    @Bean
+//    public AsyncRestTemplate asyncRestTemplate() {
+//        AsyncRestTemplate template = new AsyncRestTemplate(netty4ClientHttpRequestFactory());
+//        return template;
+//    }
+//
+//    public Netty4ClientHttpRequestFactory netty4ClientHttpRequestFactory() {
+//        Netty4ClientHttpRequestFactory requestFactory = new Netty4ClientHttpRequestFactory();
+//        return requestFactory;
+//    }
 
 }

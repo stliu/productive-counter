@@ -41,7 +41,7 @@ public class ASDF {
 
     private static final String OWNER = "easemob";
 
-    @PostConstruct
+//    @PostConstruct
     public void findAllMembers() {
         allMembersCommand.fetch(OWNER)
                 .subscribe(new Subscriber<User>() {
@@ -97,7 +97,7 @@ public class ASDF {
         }
     };
 
-    static Instant  since = Instant.parse("2015-06-01T00:00:00.00Z");
+    static Instant  since = Instant.parse("2015-08-01T00:00:00.00Z");
 
     /**
      * 把一个github repo的所有的commits取出来
